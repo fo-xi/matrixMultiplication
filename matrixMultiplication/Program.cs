@@ -42,8 +42,8 @@ namespace matrixMultiplication
 
         static void Example2()
         {
-            const int rowСount = 160;
-            const int columnСount = 160;
+            const int rowСount = 2;
+            const int columnСount = 2;
 
             var stopwatchTest = new Stopwatch();
             stopwatchTest.Start();

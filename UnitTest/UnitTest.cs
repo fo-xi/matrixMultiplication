@@ -1,5 +1,6 @@
 ﻿using matrixMultiplication;
 using NUnit.Framework;
+using System.Runtime.InteropServices;
 using System;
 
 namespace UnitTest
@@ -51,6 +52,16 @@ namespace UnitTest
 			var matrixA = new Matrix(_a);
 			var matrixB = new Matrix(_b);
 			var matrixResult = MatrixCalculator.ParallelMultiply2(matrixA, matrixB);
+
+			Assert.AreEqual(_result, matrixResult.Data);
+		}
+
+		[Test]
+		public void TestParallelMultiply3()
+		{
+			var matrixA = new Matrix(_a);
+			var matrixB = new Matrix(_b);
+			var matrixResult = MatrixCalculator.ParallelMultiply3(matrixA, matrixB);
 
 			Assert.AreEqual(_result, matrixResult.Data);
 		}
