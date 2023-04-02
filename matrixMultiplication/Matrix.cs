@@ -37,11 +37,11 @@ namespace matrixMultiplication
 
             Data = new double[rowСount, columnСount];
 
-            for (int i = 0; i < rowСount; i++)
+            for (int rowIndex = 0; rowIndex < rowСount; rowIndex++)
             {
-                for (int j = 0; j < columnСount; j++)
+                for (int columnIndex = 0; columnIndex < columnСount; columnIndex++)
                 {
-                    Data[i, j] = random.Next(-50, 50);
+                    Data[rowIndex, columnIndex] = random.Next(-50, 50);
                 }
             }
         }

@@ -42,8 +42,8 @@ namespace matrixMultiplication
 
         static void Example2()
         {
-            const int rowСount = 1000;
-            const int columnСount = 1000;
+            const int rowСount = 160;
+            const int columnСount = 160;
 
             var stopwatchTest = new Stopwatch();
             stopwatchTest.Start();
@@ -64,25 +64,32 @@ namespace matrixMultiplication
             stopwatch.Start();
             MatrixCalculator.ParallelMultiply(matrixA, matrixB);
             stopwatch.Stop();
-            Console.WriteLine($"Параллельный алгоритм №1: {stopwatch.Elapsed}");
+            Console.WriteLine($"Параллельный алгоритм №1 Parallel: {stopwatch.Elapsed}");
 
             // Тест №3
             stopwatch = new Stopwatch();
             stopwatch.Start();
             MatrixCalculator.ParallelMultiply2(matrixA, matrixB);
             stopwatch.Stop();
-            Console.WriteLine($"Параллельный алгоритм №2: {stopwatch.Elapsed}");
+            Console.WriteLine($"Параллельный алгоритм №2 Task: {stopwatch.Elapsed}");
+
+            // Тест №4
+            stopwatch = new Stopwatch();
+            stopwatch.Start();
+            MatrixCalculator.ParallelMultiply3(matrixA, matrixB);
+            stopwatch.Stop();
+            Console.WriteLine($"Параллельный алгоритм №3 OpenMP: {stopwatch.Elapsed}");
 
             Console.ReadKey();
         }
 
         static void PrintMatrix(Matrix matrix)
         {
-            for (int i = 0; i < matrix.RowСount; i++)
+            for (int rowIndex = 0; rowIndex < matrix.RowСount; rowIndex++)
             {
-                for (int j = 0; j < matrix.ColumnСount; j++)
+                for (int columnIndex = 0; columnIndex < matrix.ColumnСount; columnIndex++)
                 {
-                    Console.Write($"{matrix.Data[i, j]}\t");
+                    Console.Write($"{matrix.Data[rowIndex, columnIndex]}\t");
                 }
                 Console.WriteLine();
             }
