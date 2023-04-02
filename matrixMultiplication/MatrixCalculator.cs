@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 namespace matrixMultiplication
 {
@@ -123,28 +124,23 @@ namespace matrixMultiplication
 				throw new ArgumentException("Matrices are not compatible for multiplication");
 			}
 
+			var numThreads = Environment.ProcessorCount;
 			var result = new double[a.RowСount, b.ColumnСount];
-
-            int max_threads = Environment.ProcessorCount;
-            omp_set_num_threads(max_threads);
-
-            // Parallelize matrix multiplication
-#pragma omp parallel for shared(a, b, result)
-            for (int rowIndex = 0; rowIndex < a.RowСount; rowIndex++)
-            {
-                for (int columnIndex = 0; columnIndex < b.ColumnСount; columnIndex++)
-                {
-                    double sum = 0;
-                    for (int k = 0; k < a.ColumnСount; k++)
-                    {
-                        sum += a.Data[rowIndex, k] * b.Data[k, columnIndex];
-                    }
-
-                    result[rowIndex, columnIndex] = sum;
-                }
-            }
-
-            return new Matrix(result);
+			Multiple(
+				a.Data,
+				a.RowСount,
+				a.ColumnСount,
+				b.Data,
+				b.RowСount,
+				b.ColumnСount,
+				numThreads,
+				result);
+			return new Matrix(result);
 		}
+
+		[DllImport("OpenMPDll.dll", EntryPoint = "Multiple")]
+		public static extern int Multiple(double[,] a, int aRowСount, int aColumnСount,
+			double[,] b, int bRowСount, int bColumnСount, int threadCount, double[,] result);
+
 	}
 }

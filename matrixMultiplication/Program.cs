@@ -42,8 +42,8 @@ namespace matrixMultiplication
 
         static void Example2()
         {
-            const int rowСount = 160;
-            const int columnСount = 160;
+            const int rowСount = 1000;
+            const int columnСount = 1000;
 
             var stopwatchTest = new Stopwatch();
             stopwatchTest.Start();
@@ -54,10 +54,10 @@ namespace matrixMultiplication
 
             // Тест №1
             var stopwatch = new Stopwatch();
-            stopwatch.Start();
-            MatrixCalculator.Multiply(matrixA, matrixB);
-            stopwatch.Stop();
-            Console.WriteLine($"Последовательный алгоритм: {stopwatch.Elapsed}");
+            //stopwatch.Start();
+            //MatrixCalculator.Multiply(matrixA, matrixB);
+            //stopwatch.Stop();
+            //Console.WriteLine($"Последовательный алгоритм: {stopwatch.Elapsed}");
 
             // Тест №2
             stopwatch = new Stopwatch();
