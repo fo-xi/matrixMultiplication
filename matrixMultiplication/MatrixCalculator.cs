@@ -40,6 +40,7 @@ namespace matrixMultiplication
 			return new Matrix(result);
 		}
 
+		// Parallel
 		public static Matrix ParallelMultiply(Matrix a, Matrix b)
 		{
 			if (a.ColumnСount != b.RowСount)
@@ -66,6 +67,7 @@ namespace matrixMultiplication
 			return new Matrix(result);
 		}
 
+		// Task
 		public static Matrix ParallelMultiply2(Matrix a, Matrix b)
 		{
 			if (a.ColumnСount != b.RowСount)
@@ -81,24 +83,12 @@ namespace matrixMultiplication
 			// Количество строк обрабатываемых каждым потоком
 			int rowsPerThread = a.RowСount / numThreads;
 
-			// Содержит задачи, выполняющие перемножение
 			Task[] tasks = new Task[numThreads];
 			for (int i = 0; i < numThreads; i++)
 			{
 				int startIndex = i * rowsPerThread;
-
-				// Если последний поток, то берем все до последней строки
-				// Например: 1000 строк
-				// Начальный индекс для первого потока = 0
-				// Конечный индекс для первого потока = 62 (то есть 1000 : 16)
-				// !!! Не включительно, так как отсчет идет от нуля
-
-				// Начальный индекс для второго потока = 62
-				// Конечный индекс для второго потока = 124 (то есть 2 * 62)
-
 				int endIndex = (i == numThreads - 1) ? a.RowСount : (i + 1) * rowsPerThread;
 
-				// Запустили задачу для каждого потока, потоки бегут парарллельно
 				tasks[i] = Task.Run(() =>
 				{
 					for (int rowIndex = startIndex; rowIndex < endIndex; rowIndex++)
@@ -121,6 +111,7 @@ namespace matrixMultiplication
 			return new Matrix(result);
 		}
 
+		// OpenMP
 		public static Matrix ParallelMultiply3(Matrix a, Matrix b)
 		{
 			if (a.ColumnСount != b.RowСount)

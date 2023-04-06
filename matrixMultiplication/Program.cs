@@ -42,15 +42,11 @@ namespace matrixMultiplication
 
         static void Example2()
         {
-            const int rowСount = 2;
-            const int columnСount = 2;
+            const int rowСount = 1000;
+            const int columnСount = 1000;
 
-            var stopwatchTest = new Stopwatch();
-            stopwatchTest.Start();
             var matrixA = new Matrix(rowСount, columnСount);
             var matrixB = new Matrix(rowСount, columnСount);
-            stopwatchTest.Stop();
-            Console.WriteLine($"Создание матриц: {stopwatchTest.Elapsed}");
 
             // Тест №1
             var stopwatch = new Stopwatch();

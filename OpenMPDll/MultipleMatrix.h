@@ -8,7 +8,7 @@ extern "C" __declspec(dllexport) int Multiple(double* a, int aRowÑount, int aCol
     // ßâíîå çàäàíèå êîëè÷åñòâà ïîòîêîâ
     omp_set_num_threads(threadCount);
 
-	#pragma omp parallel for shared(a, b, result)
+	#pragma omp parallel
     for (int rowIndex = 0; rowIndex < aRowÑount; rowIndex++)
     {
         for (int columnIndex = 0; columnIndex < bColumnÑount; columnIndex++)
@@ -21,6 +21,6 @@ extern "C" __declspec(dllexport) int Multiple(double* a, int aRowÑount, int aCol
             }
         }
     }
-
+   
     return 0;
 }
