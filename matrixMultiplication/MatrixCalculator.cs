@@ -10,6 +10,10 @@ namespace matrixMultiplication
 {
 	public static class MatrixCalculator
 	{
+		// Получение количества всех потоков
+		//private static readonly int NumThreads = Environment.ProcessorCount;
+		private static readonly int NumThreads = 1;
+
 		[DllImport("OpenMPDll.dll", CallingConvention = CallingConvention.Cdecl)]
 		public static extern int Multiple(double[,] a, int aRowСount, int aColumnСount,
 			double[,] b, int bRowСount, int bColumnСount, int threadCount, double[,] result);
@@ -40,7 +44,7 @@ namespace matrixMultiplication
 			return new Matrix(result);
 		}
 
-		// Parallel
+		// Task
 		public static Matrix ParallelMultiply(Matrix a, Matrix b)
 		{
 			if (a.ColumnСount != b.RowСount)
@@ -50,44 +54,14 @@ namespace matrixMultiplication
 
 			var result = new double[a.RowСount, b.ColumnСount];
 
-			Parallel.For(0, a.RowСount, rowIndex =>
-			{
-				for (int columnIndex = 0; columnIndex < b.ColumnСount; columnIndex++)
-				{
-					double sum = 0;
-					for (int k = 0; k < a.ColumnСount; k++)
-					{
-						sum += a.Data[rowIndex, k] * b.Data[k, columnIndex];
-					}
-
-					result[rowIndex, columnIndex] = sum;
-				}
-			});
-
-			return new Matrix(result);
-		}
-
-		// Task
-		public static Matrix ParallelMultiply2(Matrix a, Matrix b)
-		{
-			if (a.ColumnСount != b.RowСount)
-			{
-				throw new ArgumentException("Matrices are not compatible for multiplication");
-			}
-
-			var result = new double[a.RowСount, b.ColumnСount];
-
-			// Получение количества всех потоков
-			int numThreads = Environment.ProcessorCount;
-
 			// Количество строк обрабатываемых каждым потоком
-			int rowsPerThread = a.RowСount / numThreads;
+			int rowsPerThread = a.RowСount / NumThreads;
 
-			Task[] tasks = new Task[numThreads];
-			for (int i = 0; i < numThreads; i++)
+			Task[] tasks = new Task[NumThreads];
+			for (int i = 0; i < NumThreads; i++)
 			{
 				int startIndex = i * rowsPerThread;
-				int endIndex = (i == numThreads - 1) ? a.RowСount : (i + 1) * rowsPerThread;
+				int endIndex = (i == NumThreads - 1) ? a.RowСount : (i + 1) * rowsPerThread;
 
 				tasks[i] = Task.Run(() =>
 				{
@@ -112,14 +86,12 @@ namespace matrixMultiplication
 		}
 
 		// OpenMP
-		public static Matrix ParallelMultiply3(Matrix a, Matrix b)
+		public static Matrix ParallelMultiply2(Matrix a, Matrix b)
 		{
 			if (a.ColumnСount != b.RowСount)
 			{
 				throw new ArgumentException("Matrices are not compatible for multiplication");
 			}
-
-			var numThreads = Environment.ProcessorCount;
 
 			var result = new double[a.RowСount, b.ColumnСount];
 
@@ -130,7 +102,7 @@ namespace matrixMultiplication
                 b.Data,
                 b.RowСount,
                 b.ColumnСount,
-                numThreads,
+                NumThreads,
                 result);
 
             return new Matrix(result);

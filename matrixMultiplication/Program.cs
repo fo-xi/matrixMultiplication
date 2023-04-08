@@ -42,37 +42,30 @@ namespace matrixMultiplication
 
         static void Example2()
         {
-            const int rowСount = 1000;
-            const int columnСount = 1000;
+            const int rowСount = 2000;
+            const int columnСount = 2000;
 
             var matrixA = new Matrix(rowСount, columnСount);
             var matrixB = new Matrix(rowСount, columnСount);
 
             // Тест №1
             var stopwatch = new Stopwatch();
-            stopwatch.Start();
-            MatrixCalculator.Multiply(matrixA, matrixB);
-            stopwatch.Stop();
-            Console.WriteLine($"Последовательный алгоритм: {stopwatch.Elapsed}");
+            //stopwatch.Start();
+            //MatrixCalculator.Multiply(matrixA, matrixB);
+            //stopwatch.Stop();
+            //Console.WriteLine($"Последовательный алгоритм: {stopwatch.Elapsed}");
 
             // Тест №2
-            stopwatch = new Stopwatch();
-            stopwatch.Start();
-            MatrixCalculator.ParallelMultiply(matrixA, matrixB);
-            stopwatch.Stop();
-            Console.WriteLine($"Параллельный алгоритм №1 Parallel: {stopwatch.Elapsed}");
+            //stopwatch = new Stopwatch();
+            //stopwatch.Start();
+            //MatrixCalculator.ParallelMultiply(matrixA, matrixB);
+            //stopwatch.Stop();
+            //Console.WriteLine($"Параллельный алгоритм №2 Task: {stopwatch.Elapsed}");
 
             // Тест №3
             stopwatch = new Stopwatch();
             stopwatch.Start();
             MatrixCalculator.ParallelMultiply2(matrixA, matrixB);
-            stopwatch.Stop();
-            Console.WriteLine($"Параллельный алгоритм №2 Task: {stopwatch.Elapsed}");
-
-            // Тест №4
-            stopwatch = new Stopwatch();
-            stopwatch.Start();
-            MatrixCalculator.ParallelMultiply3(matrixA, matrixB);
             stopwatch.Stop();
             Console.WriteLine($"Параллельный алгоритм №3 OpenMP: {stopwatch.Elapsed}");
 

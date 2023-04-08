@@ -81,18 +81,20 @@ namespace UnitTest
 								{ -154.861, 860.214, 54.106, -394.689 }},
 		};
 
-		private Matrix RoundNumber(Matrix matrix)
+		private bool CheckNumber(double [,] a, double[,] b)
         {
-			var result = new double[matrix.RowСount, matrix.ColumnСount];
-			for (int j = 0; j < matrix.RowСount; j++)
+			for (int i = 0; i < a.GetLength(0); i++)
 			{
-				for (int k = 0; k < matrix.ColumnСount; k++)
+				for (int j = 0; j < a.GetLength(1); j++)
 				{
-					result[j, k] = Math.Round(matrix.Data[j, k], 3);
+					if (Math.Abs(a[i, j] - b[i, j]) > 0.001)
+                    {
+						return false;
+                    }
 				}
 			}
-			
-			return new Matrix(result);
+
+			return true;
 		}
 
 		[Test]
@@ -104,7 +106,7 @@ namespace UnitTest
 				var matrixB = new Matrix(_b[i]);
 				var matrixResult = MatrixCalculator.Multiply(matrixA, matrixB);
 
-				Assert.AreEqual(_result[i], RoundNumber(matrixResult).Data);
+				Assert.IsTrue(CheckNumber(_result[i], matrixResult.Data));
 			};
 		}
 
@@ -115,22 +117,9 @@ namespace UnitTest
 			{
 				var matrixA = new Matrix(_a[i]);
 				var matrixB = new Matrix(_b[i]);
-				var matrixResult = MatrixCalculator.Multiply(matrixA, matrixB);
+				var matrixResult = MatrixCalculator.ParallelMultiply(matrixA, matrixB);
 
-				Assert.AreEqual(_result[i], RoundNumber(matrixResult).Data);
-			};
-		}
-
-		[Test]
-		public void TestParallelMultiply2()
-		{
-			for (int i = 0; i < _a.Count; i++)
-			{
-				var matrixA = new Matrix(_a[i]);
-				var matrixB = new Matrix(_b[i]);
-				var matrixResult = MatrixCalculator.Multiply(matrixA, matrixB);
-
-				Assert.AreEqual(_result[i], RoundNumber(matrixResult).Data);
+				Assert.IsTrue(CheckNumber(_result[i], matrixResult.Data));
 			};
 		}
 
@@ -141,9 +130,9 @@ namespace UnitTest
             {
                 var matrixA = new Matrix(_a[i]);
                 var matrixB = new Matrix(_b[i]);
-                var matrixResult = MatrixCalculator.ParallelMultiply3(matrixA, matrixB);
+                var matrixResult = MatrixCalculator.ParallelMultiply2(matrixA, matrixB);
 
-                Assert.AreEqual(_result[i], RoundNumber(matrixResult).Data);
+				Assert.IsTrue(CheckNumber(_result[i], matrixResult.Data));
             };
         }
     }

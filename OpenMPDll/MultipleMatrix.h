@@ -2,25 +2,25 @@
 #include <cstdio>
 #include <omp.h>
 
-extern "C" __declspec(dllexport) int Multiple(double* a, int aRowÑount, int aColumnÑount,
-    double* b, int bRowÑount, int bColumnÑount, int threadCount, double* result)
+extern "C" __declspec(dllexport) int Multiple(double* a, int aRowCount, int aColumnCount,
+    double* b, int bRowCount, int bColumnCount, int threadCount, double* result)
 {
-    // ßâíîå çàäàíèå êîëè÷åñòâà ïîòîêîâ
+    // Çàäàíèå êîëè÷åñòâà ïîòîêîâ
     omp_set_num_threads(threadCount);
 
-	#pragma omp parallel
-    for (int rowIndex = 0; rowIndex < aRowÑount; rowIndex++)
+    #pragma omp parallel for
+    for (int rowIndex = 0; rowIndex < aRowCount; rowIndex++)
     {
-        for (int columnIndex = 0; columnIndex < bColumnÑount; columnIndex++)
+        for (int columnIndex = 0; columnIndex < bColumnCount; columnIndex++)
         {
-            result[rowIndex * aColumnÑount + columnIndex] = 0;
-            for (int k = 0; k < aColumnÑount; k++)
+            result[rowIndex * aColumnCount + columnIndex] = 0;
+            for (int k = 0; k < aColumnCount; k++)
             {
-                result[rowIndex * bColumnÑount + columnIndex] +=
-                    a[rowIndex * aColumnÑount + k] * b[k * bColumnÑount + columnIndex];
+                result[rowIndex * bColumnCount + columnIndex] +=
+                    a[rowIndex * aColumnCount + k] * b[k * bColumnCount + columnIndex];
             }
         }
     }
-   
+
     return 0;
 }
