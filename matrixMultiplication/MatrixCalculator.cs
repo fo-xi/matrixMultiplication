@@ -12,7 +12,7 @@ namespace matrixMultiplication
 	{
 		// Получение количества всех потоков
 		//private static readonly int NumThreads = Environment.ProcessorCount;
-		private static readonly int NumThreads = 1;
+		private static readonly int NumThreads = 8;
 
 		[DllImport("OpenMPDll.dll", CallingConvention = CallingConvention.Cdecl)]
 		public static extern int Multiple(double[,] a, int aRowСount, int aColumnСount,
