@@ -2,7 +2,7 @@
 #include <cstdio>
 #include <omp.h>
 
-extern "C" __declspec(dllexport) int Multiple(double* a, int aRowCount, int aColumnCount,
+extern "C" __declspec(dllexport) int Multiply(double* a, int aRowCount, int aColumnCount,
     double* b, int bRowCount, int bColumnCount, int threadCount, double* result)
 {
     // Задание количества потоков

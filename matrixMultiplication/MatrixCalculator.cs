@@ -12,10 +12,10 @@ namespace matrixMultiplication
 	{
 		// Получение количества всех потоков
 		//private static readonly int NumThreads = Environment.ProcessorCount;
-		private static readonly int NumThreads = 8;
+		private static readonly int NumThreads = 4;
 
 		[DllImport("OpenMPDll.dll", CallingConvention = CallingConvention.Cdecl)]
-		public static extern int Multiple(double[,] a, int aRowСount, int aColumnСount,
+		public static extern int Multiply(double[,] a, int aRowСount, int aColumnСount,
 			double[,] b, int bRowСount, int bColumnСount, int threadCount, double[,] result);
 
 		public static Matrix Multiply(Matrix a, Matrix b)
@@ -86,7 +86,7 @@ namespace matrixMultiplication
 		}
 
 		// OpenMP
-		public static Matrix ParallelMultiply2(Matrix a, Matrix b)
+		public static Matrix OpenMPMultiply(Matrix a, Matrix b)
 		{
 			if (a.ColumnСount != b.RowСount)
 			{
@@ -95,7 +95,7 @@ namespace matrixMultiplication
 
 			var result = new double[a.RowСount, b.ColumnСount];
 
-            Multiple(
+            Multiply(
                 a.Data,
                 a.RowСount,
                 a.ColumnСount,

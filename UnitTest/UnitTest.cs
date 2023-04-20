@@ -124,13 +124,13 @@ namespace UnitTest
 		}
 
         [Test]
-        public void TestParallelMultiply3()
+        public void TestOpenMPMultiply()
         {
             for (int i = 0; i < _a.Count; i++)
             {
                 var matrixA = new Matrix(_a[i]);
                 var matrixB = new Matrix(_b[i]);
-                var matrixResult = MatrixCalculator.ParallelMultiply2(matrixA, matrixB);
+                var matrixResult = MatrixCalculator.OpenMPMultiply(matrixA, matrixB);
 
 				Assert.IsTrue(CheckNumber(_result[i], matrixResult.Data));
             };

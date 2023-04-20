@@ -11,7 +11,7 @@ namespace matrixMultiplication
     {
         static void Main(string[] args)
         {
-            Example2();
+            Example();
         }
 
         static void Example1()
@@ -40,7 +40,7 @@ namespace matrixMultiplication
             Console.ReadKey();
         }
 
-        static void Example2()
+        static void Example()
         {
             const int rowСount = 1000;
             const int columnСount = 1000;
@@ -50,10 +50,10 @@ namespace matrixMultiplication
 
             // Тест №1
             var stopwatch = new Stopwatch();
-            //stopwatch.Start();
-            //MatrixCalculator.Multiply(matrixA, matrixB);
-            //stopwatch.Stop();
-            //Console.WriteLine($"Последовательный алгоритм: {stopwatch.Elapsed}");
+            stopwatch.Start();
+            MatrixCalculator.Multiply(matrixA, matrixB);
+            stopwatch.Stop();
+            Console.WriteLine($"Последовательный алгоритм: {stopwatch.Elapsed}");
 
             //Тест №2
             stopwatch = new Stopwatch();
@@ -65,7 +65,7 @@ namespace matrixMultiplication
             // Тест №3
             stopwatch = new Stopwatch();
             stopwatch.Start();
-            MatrixCalculator.ParallelMultiply2(matrixA, matrixB);
+            MatrixCalculator.OpenMPMultiply(matrixA, matrixB);
             stopwatch.Stop();
             Console.WriteLine($"Параллельный алгоритм №3 OpenMP: {stopwatch.Elapsed}");
 
